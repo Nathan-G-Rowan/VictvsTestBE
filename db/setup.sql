@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS victvs_test;
+DROP DATABASE IF EXISTS victvs;
+
+CREATE DATABASE victvs_test;
+CREATE DATABASE victvs;
