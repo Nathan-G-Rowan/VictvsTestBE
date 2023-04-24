@@ -10,7 +10,7 @@ beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
 describe("GET /api", () => {
-  test("200: returns response object", () => {
+  test("200: returns response", () => {
     return request(app).get("/api").expect(200);
   });
 });
@@ -22,6 +22,40 @@ describe("404 response", () => {
       .expect(404)
       .then(({ body: { msg } }) => {
         expect(msg).toBe("path not found");
+      });
+  });
+});
+
+describe("GET /api/exams", () => {
+  test("200: returns exams array", () => {
+    return request(app)
+      .get("/api/exams")
+      .expect(200)
+      .then(({ body: { exams } }) => {
+        expect(Array.isArray(exams)).toBe(true);
+        exams.forEach((exam) => {
+          expect(exam).toEqual(
+            expect.objectContaining({
+              id: expect.any(Number),
+              title: expect.any(String),
+              description: expect.any(String),
+              date: expect.any(String),
+              candidate_id: expect.any(Number),
+              location_name: expect.any(String),
+              latitude: expect.any(Number),
+              longitude: expect.any(Number),
+            })
+          );
+        });
+      });
+  });
+  test("200: exams array is date ordered", () => {
+    return request(app)
+      .get("/api/exams")
+      .expect(200)
+      .then(({ body: { exams } }) => {
+        console.log(exams);
+        expect(exams).toBeSortedBy("date");
       });
   });
 });
