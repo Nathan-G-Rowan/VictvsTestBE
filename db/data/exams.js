@@ -1,6 +1,5 @@
 module.exports = [
   {
-    id: 1,
     Title: "VICTVS1",
     Description: "VICTVS Exam 1",
     Candidateid: 1,
@@ -10,7 +9,6 @@ module.exports = [
     Longitude: -0.127758,
   },
   {
-    id: 2,
     Title: "VICTVS2",
     Description: "VICTVS Exam 2",
     Candidateid: 2,
@@ -20,7 +18,6 @@ module.exports = [
     Longitude: 151.20929,
   },
   {
-    id: 3,
     Title: "VICTVS3",
     Description: "VICTVS Exam 3",
     Candidateid: 1,
@@ -30,7 +27,6 @@ module.exports = [
     Longitude: -1.5710549,
   },
   {
-    id: 4,
     Title: "VICTVS4",
     Description: "VICTVS Exam 4",
     Candidateid: 1,
@@ -40,7 +36,6 @@ module.exports = [
     Longitude: -0.105041,
   },
   {
-    id: 5,
     Title: "VICTVS5",
     Description: "VICTVS Exam 5",
     Candidateid: 3,
@@ -50,7 +45,6 @@ module.exports = [
     Longitude: 13.404954,
   },
   {
-    id: 6,
     Title: "VICTVS6",
     Description: "VICTVS Exam 6",
     Candidateid: 1,
@@ -60,7 +54,6 @@ module.exports = [
     Longitude: 9.1162384,
   },
   {
-    id: 7,
     Title: "VICTVS7",
     Description: "VICTVS Exam 7",
     Candidateid: 1,
@@ -70,7 +63,6 @@ module.exports = [
     Longitude: 9.2797631,
   },
   {
-    id: 8,
     Title: "VICTVS8",
     Description: "VICTVS Exam 8",
     Candidateid: 1,
@@ -80,7 +72,6 @@ module.exports = [
     Longitude: -0.127758,
   },
   {
-    id: 9,
     Title: "VICTVS9",
     Description: "VICTVS Exam 9",
     Candidateid: 2,
@@ -90,7 +81,6 @@ module.exports = [
     Longitude: -0.546046,
   },
   {
-    id: 10,
     Title: "VICTVS10",
     Description: "VICTVS Exam 10",
     Candidateid: 1,
@@ -100,7 +90,15 @@ module.exports = [
     Longitude: -0.127758,
   },
   {
-    id: 11,
+    Title: "VICTVS20",
+    Description: "VICTVS Exam 20",
+    Candidateid: 1,
+    Date: "25/08/2023 09:30:00",
+    LocationName: "London",
+    Latitude: 51.5285262,
+    Longitude: -0.2664025,
+  },
+  {
     Title: "VICTVS11",
     Description: "VICTVS Exam 11",
     Candidateid: 1,
@@ -110,7 +108,6 @@ module.exports = [
     Longitude: -0.127758,
   },
   {
-    id: 12,
     Title: "VICTVS12",
     Description: "VICTVS Exam 12",
     Candidateid: 3,
@@ -120,7 +117,6 @@ module.exports = [
     Longitude: 13.404954,
   },
   {
-    id: 13,
     Title: "VICTVS13",
     Description: "VICTVS Exam 13",
     Candidateid: 1,
@@ -130,7 +126,6 @@ module.exports = [
     Longitude: -0.127758,
   },
   {
-    id: 14,
     Title: "VICTVS14",
     Description: "VICTVS Exam 14",
     Candidateid: 4,
@@ -140,7 +135,6 @@ module.exports = [
     Longitude: -74.007233,
   },
   {
-    id: 15,
     Title: "VICTVS15",
     Description: "VICTVS Exam 15",
     Candidateid: 1,
@@ -150,7 +144,6 @@ module.exports = [
     Longitude: -0.14074641294861687,
   },
   {
-    id: 16,
     Title: "VICTVS16",
     Description: "VICTVS Exam 16",
     Candidateid: 1,
@@ -160,7 +153,6 @@ module.exports = [
     Longitude: -0.09611445773921269,
   },
   {
-    id: 17,
     Title: "VICTVS17",
     Description: "VICTVS Exam 17",
     Candidateid: 1,
@@ -170,7 +162,6 @@ module.exports = [
     Longitude: -0.07482844833165063,
   },
   {
-    id: 18,
     Title: "VICTVS18",
     Description: "VICTVS Exam 18",
     Candidateid: 4,
@@ -180,7 +171,6 @@ module.exports = [
     Longitude: -74.007233,
   },
   {
-    id: 19,
     Title: "VICTVS19",
     Description: "VICTVS Exam 19",
     Candidateid: 1,
@@ -190,7 +180,6 @@ module.exports = [
     Longitude: -0.07208186647261046,
   },
   {
-    id: 20,
     Title: "VICTVS20",
     Description: "VICTVS Exam 20",
     Candidateid: 1,
