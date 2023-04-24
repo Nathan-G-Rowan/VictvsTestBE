@@ -11,11 +11,17 @@ afterAll(() => db.end());
 
 describe("GET /api", () => {
   test("200: returns response object", () => {
+    return request(app).get("/api").expect(200);
+  });
+});
+
+describe("404 response", () => {
+  test("404: returns error object", () => {
     return request(app)
-      .get("/api")
-      .expect(200)
-      .then(({ body: response }) => {
-        expect(response).toBeInstanceOf(Object);
+      .get("/missing_directory")
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("path not found");
       });
   });
 });
