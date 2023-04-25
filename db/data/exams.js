@@ -90,15 +90,6 @@ module.exports = [
     Longitude: -0.127758,
   },
   {
-    Title: "VICTVS20",
-    Description: "VICTVS Exam 20",
-    Candidateid: 1,
-    Date: "25/08/2023 09:30:00",
-    LocationName: "London",
-    Latitude: 51.5285262,
-    Longitude: -0.2664025,
-  },
-  {
     Title: "VICTVS11",
     Description: "VICTVS Exam 11",
     Candidateid: 1,
