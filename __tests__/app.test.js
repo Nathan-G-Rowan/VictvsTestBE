@@ -168,5 +168,15 @@ describe("GET /api/exams", () => {
           });
       });
     });
+    describe("filter by multiple aspects", () => {
+      test("200: responds with select results from multiple fields", () => {
+        return request(app)
+          .get("/api/exams?date=05-05-2023&candidate=1&location=London")
+          .expect(200)
+          .then(({ body: { exams } }) => {
+            expect(exams.length).toBe(9);
+          });
+      });
+    });
   });
 });
