@@ -40,3 +40,15 @@ exports.selectCandidates = () => {
     .query(`SELECT * FROM candidates;`)
     .then((candidates) => candidates.rows);
 };
+
+exports.insertCandidate = (name) => {
+  return db
+    .query(
+      `
+      INSERT INTO candidates (name) VALUES ($1)
+      RETURNING *
+      `,
+      [name]
+    )
+    .then(({ rows }) => rows[0]);
+};
