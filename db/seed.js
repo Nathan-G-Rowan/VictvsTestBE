@@ -2,9 +2,15 @@ const db = require("./connection");
 const format = require("pg-format");
 
 const seed = async ({ candidateData, examData }) => {
+  let db_name;
+  await db.query(`SELECT current_database();`).then(({ rows }) => {
+    db_name = rows[0].current_database;
+  });
+
+  await db.query(`ALTER DATABASE ${db_name} SET datestyle TO 'ISO, european';`);
+
   await db.query(`DROP TABLE IF EXISTS exams;`);
   await db.query(`DROP TABLE IF EXISTS candidates;`);
-
 
   await db.query(`
     CREATE TABLE candidates (
