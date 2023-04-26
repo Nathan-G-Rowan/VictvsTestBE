@@ -23,6 +23,7 @@ returns an array of exam objects.
     title: "string: the exam's title",
     description: "string: the exam's description",
     candidate_id: "number: the exam candidate's id",
+    candidate_name: "string: the name of the exam candidate",
     date: "timestamp: the date of the exam, in yyyy-mm-ddT:hh:mm:ss.mls' format",
     location_name: "string: the location of the exam",
     latitude: "number: latitude of the exam location",
