@@ -4,8 +4,8 @@ const { handle404Paths, handle500Error } = require("./error.controllers");
 
 const app = express();
 
-app.get("/api", getApi);
-app.get("/api/exams", getExams);
+app.get("/", getApi);
+app.get("/exams", getExams);
 
 app.get("*", handle404Paths);
 

@@ -9,9 +9,9 @@ const request = require("supertest");
 beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
-describe("GET /api", () => {
+describe("GET /", () => {
   test("200: returns response", () => {
-    return request(app).get("/api").expect(200);
+    return request(app).get("/").expect(200);
   });
 });
 
@@ -26,11 +26,11 @@ describe("404 response", () => {
   });
 });
 
-describe("GET /api/exams", () => {
+describe("GET /exams", () => {
   describe("basic functionality", () => {
     test("200: returns exams array", () => {
       return request(app)
-        .get("/api/exams")
+        .get("/exams")
         .expect(200)
         .then(({ body: { exams } }) => {
           expect(Array.isArray(exams)).toBe(true);
@@ -42,6 +42,7 @@ describe("GET /api/exams", () => {
                 description: expect.any(String),
                 date: expect.any(String),
                 candidate_id: expect.any(Number),
+                candidate_name: expect.any(String),
                 location_name: expect.any(String),
                 latitude: expect.any(Number),
                 longitude: expect.any(Number),
@@ -52,7 +53,7 @@ describe("GET /api/exams", () => {
     });
     test("200: exams array is date ordered", () => {
       return request(app)
-        .get("/api/exams")
+        .get("/exams")
         .expect(200)
         .then(({ body: { exams } }) => {
           expect(exams).toBeSortedBy("date");
@@ -63,7 +64,7 @@ describe("GET /api/exams", () => {
     describe("filter by date", () => {
       test("200: responds with filtered entries in XX-XX-XXXX format", () => {
         return request(app)
-          .get("/api/exams?date=17-06-2023")
+          .get("/exams?date=17-06-2023")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(1);
@@ -72,6 +73,7 @@ describe("GET /api/exams", () => {
               title: "VICTVS19",
               description: "VICTVS Exam 19",
               candidate_id: 1,
+              candidate_name: "Wilmers",
               date: "2023-06-17T15:30:00.000Z",
               location_name: "London",
               latitude: 51.514427,
@@ -81,7 +83,7 @@ describe("GET /api/exams", () => {
       });
       test("200: responds with filtered entries in XXXX-XX-XX format", () => {
         return request(app)
-          .get("/api/exams?date=2023-06-17")
+          .get("/exams?date=2023-06-17")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(1);
@@ -90,6 +92,7 @@ describe("GET /api/exams", () => {
               title: "VICTVS19",
               description: "VICTVS Exam 19",
               candidate_id: 1,
+              candidate_name: "Wilmers",
               date: "2023-06-17T15:30:00.000Z",
               location_name: "London",
               latitude: 51.514427,
@@ -99,7 +102,7 @@ describe("GET /api/exams", () => {
       });
       test("200: dates that don't show up in the database returns an empty array", () => {
         return request(app)
-          .get("/api/exams?date=9999-12-31")
+          .get("/exams?date=9999-12-31")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(0);
@@ -107,7 +110,7 @@ describe("GET /api/exams", () => {
       });
       test("200: date query does not allow data injection", () => {
         return request(app)
-          .get("/api/exams?date='; DROP TABLE exams;'")
+          .get("/exams?date='; DROP TABLE exams;'")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(0);
@@ -117,7 +120,7 @@ describe("GET /api/exams", () => {
     describe("filter by candidate", () => {
       test("200: only responds with exams including the right candidate", () => {
         return request(app)
-          .get("/api/exams?candidate=1")
+          .get("/exams?candidate=1")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(14);
@@ -125,7 +128,7 @@ describe("GET /api/exams", () => {
       });
       test("200: returns empty array when given a non-existent id", () => {
         return request(app)
-          .get("/api/exams?candidate=100000")
+          .get("/exams?candidate=100000")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(0);
@@ -133,7 +136,7 @@ describe("GET /api/exams", () => {
       });
       test("200: returns empty array when candidate value is not a number", () => {
         return request(app)
-          .get("/api/exams?candidate=john")
+          .get("/exams?candidate=john")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(0);
@@ -143,7 +146,7 @@ describe("GET /api/exams", () => {
     describe("filter by location", () => {
       test("200: only responds with exams including the right location", () => {
         return request(app)
-          .get("/api/exams?location=London")
+          .get("/exams?location=London")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(11);
@@ -151,7 +154,7 @@ describe("GET /api/exams", () => {
       });
       test("200: responds with empty array when the location isnt attached to any exams", () => {
         return request(app)
-          .get("/api/exams?location=Gallifrey")
+          .get("/exams?location=Gallifrey")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(0);
@@ -160,7 +163,7 @@ describe("GET /api/exams", () => {
       test("200: restricts SQL injection", () => {
         return request(app)
           .get(
-            "/api/exams?location=London AND WHERE nonexistentcolumn = 'sponge'"
+            "/exams?location=London AND WHERE nonexistentcolumn = 'sponge'"
           )
           .expect(200)
           .then(({ body: { exams } }) => {
@@ -171,7 +174,7 @@ describe("GET /api/exams", () => {
     describe("filter by multiple aspects", () => {
       test("200: responds with select results from multiple fields", () => {
         return request(app)
-          .get("/api/exams?date=05-05-2023&candidate=1&location=London")
+          .get("/exams?date=05-05-2023&candidate=1&location=London")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(9);

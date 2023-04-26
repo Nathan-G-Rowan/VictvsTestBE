@@ -24,7 +24,11 @@ exports.selectExams = (date, candidate, location) => {
     argArr.push(location);
   }
 
-  let selectExamsQuery = `SELECT * FROM exams ${filterInsert}ORDER BY date ASC;`;
+  let selectExamsQuery = `
+  SELECT  exams.*, candidates.name AS candidate_name FROM exams
+  LEFT OUTER JOIN candidates
+  ON exams.candidate_id = candidates.id
+  ${filterInsert}ORDER BY date ASC;`;
 
   return db.query(selectExamsQuery, argArr).then((exams) => exams.rows);
 };
