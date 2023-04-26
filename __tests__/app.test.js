@@ -162,9 +162,7 @@ describe("GET /exams", () => {
       });
       test("200: restricts SQL injection", () => {
         return request(app)
-          .get(
-            "/exams?location=London AND WHERE nonexistentcolumn = 'sponge'"
-          )
+          .get("/exams?location=London AND WHERE nonexistentcolumn = 'sponge'")
           .expect(200)
           .then(({ body: { exams } }) => {
             expect(exams.length).toBe(0);
@@ -181,5 +179,25 @@ describe("GET /exams", () => {
           });
       });
     });
+  });
+});
+
+describe.only("GET /candidates", () => {
+  test("200: retrieves a list of all candidates", () => {
+    return request(app)
+      .get("/candidates")
+      .expect(200)
+      .then(({ body: { candidates } }) => {
+        expect(Array.isArray(candidates)).toBe(true);
+        expect(candidates.length).toBe(4);
+        candidates.forEach((candidate) => {
+          expect(candidate).toEqual(
+            expect.objectContaining({
+              id: expect.any(Number),
+              name: expect.any(String),
+            })
+          );
+        });
+      });
   });
 });

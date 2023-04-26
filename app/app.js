@@ -1,11 +1,14 @@
 const express = require("express");
-const { getApi, getExams } = require("./app.controllers");
+const { getApi, getExams, getCandidates } = require("./app.controllers");
 const { handle404Paths, handle500Error } = require("./error.controllers");
 
 const app = express();
 
 app.get("/", getApi);
+
 app.get("/exams", getExams);
+
+app.get("/candidates", getCandidates)
 
 app.get("*", handle404Paths);
 
