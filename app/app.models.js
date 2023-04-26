@@ -32,3 +32,7 @@ exports.selectExams = (date, candidate, location) => {
 
   return db.query(selectExamsQuery, argArr).then((exams) => exams.rows);
 };
+
+exports.selectCandidates = () => {
+  return db.query(`SELECT * FROM candidates;`).then((candidates) => candidates.rows);
+}

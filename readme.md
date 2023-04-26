@@ -7,11 +7,13 @@ API Host: https://nrvictvstest.onrender.com/api
 ## Contains:
 
 - Seeding scripts for SQL database
+- Seeding data
 - Scripts for the Express API to access the database
+- API test suite
 
 ## Directories:
 
-### /api/exams
+### GET /exams
 
 returns an array of exam objects.
 
@@ -34,3 +36,16 @@ optional queries:
 * **location**: only returns exams with the specified location
 * **candidate**: only returns exams with the specified candidate id
 * **date**: only returns exams on the specified date, accepts either **dd-mm-yyyy** or **yyyy-mm-dd** formats
+
+### GET /candidates
+
+returns an array of candidate objects.
+
+**example exam object:**
+
+```
+{
+    id: "number: the candidate's id",
+    name: "string: the name of the candidate"
+}
+```
