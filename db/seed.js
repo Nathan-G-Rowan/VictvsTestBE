@@ -25,7 +25,7 @@ const seed = async ({ candidateData, examData }) => {
       description VARCHAR,
       candidate_id INTEGER NOT NULL REFERENCES candidates(id),
       date TIMESTAMP NOT NULL,
-      location_name VARCHAR NOT NULL,
+      location VARCHAR NOT NULL,
       latitude REAL NOT NULL,
       longitude REAL NOT NULL
     );`);
@@ -37,7 +37,7 @@ const seed = async ({ candidateData, examData }) => {
   await db.query(insertCandidatesQuery);
 
   const insertExamsQuery = format(
-    "INSERT INTO exams (title, description, candidate_id, date, location_name, latitude, longitude) VALUES %L RETURNING *;",
+    "INSERT INTO exams (title, description, candidate_id, date, location, latitude, longitude) VALUES %L RETURNING *;",
     examData.map(
       ({
         Title,

@@ -189,6 +189,126 @@ describe("GET /exams", () => {
     });
   });
 });
+describe("POST /exams", () => {
+  test("201: responds with the newly created exam", () => {
+    return request(app)
+      .post("/exams")
+      .expect(201)
+      .send({
+        Title: "VICTVS Test",
+        Description: "A test posted exam",
+        Candidateid: 3,
+        Date: "31/12/2023 15:30:00",
+        LocationName: "Montreal",
+        Latitude: 45.5019,
+        Longitude: 73.5674,
+      })
+      .then(({ body: { exam } }) => {
+        expect(exam).toEqual({
+          id: 21,
+          title: "VICTVS Test",
+          description: "A test posted exam",
+          candidate_id: 3,
+          date: "2023-12-31T15:30:00.000Z",
+          location: "Montreal",
+          latitude: 45.5019,
+          longitude: 73.5674,
+        });
+      });
+  });
+  test("201: new exam exists in the database", () => {
+    return request(app)
+      .post("/exams")
+      .expect(201)
+      .send({
+        Title: "VICTVS Test",
+        Description: "A test posted exam",
+        Candidateid: 3,
+        Date: "31/12/2023 15:30:00",
+        LocationName: "Montreal",
+        Latitude: 45.5019,
+        Longitude: 73.5674,
+      })
+      .then(() => {
+        return db.query(`SELECT * FROM exams WHERE id = 21;`);
+      })
+      .then(({ rows }) => {
+        expect(rows[0]).toEqual({
+          id: 21,
+          title: "VICTVS Test",
+          description: "A test posted exam",
+          candidate_id: 3,
+          date: expect.any(Date),
+          location: "Montreal",
+          latitude: 45.5019,
+          longitude: 73.5674,
+        });
+      });
+  });
+  test("400: does not allow incomplete entry", () => {
+    return request(app).post("/exams").expect(400).send({
+      Description: "A test posted exam",
+      LocationName: "Montreal",
+      Latitude: 45.5019,
+      Longitude: 73.5674,
+    });
+  });
+  test("400: does not allow non-existent candidate", () => {
+    return request(app).post("/exams").expect(400).send({
+      Title: "VICTVS Test",
+      Description: "A test posted exam",
+      Candidateid: 1000000,
+      Date: "31/12/2023 15:30:00",
+      LocationName: "Montreal",
+      Latitude: 45.5019,
+      Longitude: 73.5674,
+    });
+  });
+  test("400: does not allow invalid dates", () => {
+    return request(app).post("/exams").expect(400).send({
+      Title: "VICTVS Test",
+      Description: "A test posted exam",
+      Candidateid: 3,
+      Date: "12/31/2023 15:30:00",
+      LocationName: "Montreal",
+      Latitude: 45.5019,
+      Longitude: 73.5674,
+    });
+  });
+  test("400: does not allow non-number langitude or longitude", () => {
+    return request(app).post("/exams").expect(400).send({
+      Title: "VICTVS Test",
+      Description: "A test posted exam",
+      Candidateid: 3,
+      Date: "31/12/2023 15:30:00",
+      LocationName: "Montreal",
+      Latitude: "Montreal",
+      Longitude: "Montreal",
+    });
+  });
+  test("400: does not allow invalid latitude", () => {
+    return request(app).post("/exams").expect(400).send({
+      Title: "VICTVS Test",
+      Description: "A test posted exam",
+      Candidateid: 3,
+      Date: "31/12/2023 15:30:00",
+      LocationName: "Montreal",
+      Latitude: 1000000,
+      Longitude: 73.5674,
+    });
+  });
+  test("400: does not allow invalid longitude", () => {
+    return request(app).post("/exams").expect(400).send({
+      Title: "VICTVS Test",
+      Description: "A test posted exam",
+      Candidateid: 3,
+      Date: "31/12/2023 15:30:00",
+      LocationName: "Montreal",
+      Latitude: 45.5019,
+      Longitude: 1000000,
+    });
+  });
+});
 
 describe("GET /candidates", () => {
   test("200: retrieves a list of all candidates", () => {

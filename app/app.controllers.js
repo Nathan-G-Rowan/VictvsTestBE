@@ -1,5 +1,6 @@
 const {
   selectExams,
+  insertExam,
   selectCandidates,
   insertCandidate,
 } = require("./app.models.js");
@@ -13,6 +14,16 @@ exports.getExams = (request, response, next) => {
   selectExams(query.date, query.candidate, query.location)
     .then((exams) => {
       response.status(200).send({ exams });
+    })
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.postExam = (request, response, next) => {
+  insertExam(request.body)
+    .then((exam) => {
+      response.status(201).send({ exam });
     })
     .catch((error) => {
       next(error);
