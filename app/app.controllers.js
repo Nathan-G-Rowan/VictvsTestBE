@@ -18,5 +18,7 @@ exports.getExams = (request, response, next) => {
 exports.getCandidates = (request, response, next) => {
   selectCandidates().then((candidates) => {
     response.status(200).send({ candidates });
+  }).catch((error) => {
+    next(error);
   });
 };

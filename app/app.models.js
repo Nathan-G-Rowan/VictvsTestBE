@@ -1,19 +1,21 @@
 const db = require("../db/connection");
 
+const badRequestObject = { status: 400, msg: "bad request" };
+
 exports.selectExams = (date, candidate, location) => {
   let filterInsert = "";
 
   if (date) {
     if (/^\d{2}-\d{2}-\d{4}$/.test(date) || /^\d{4}-\d{2}-\d{2}$/.test(date)) {
       filterInsert += `WHERE date >= '${date} 00:00:00.000' AND date <= '${date} 23:59:59.999 '`;
-    } else return Promise.resolve([]);
+    } else return Promise.reject(badRequestObject);
   }
 
   if (candidate) {
     if (/^\d+$/.test(candidate)) {
       filterInsert += filterInsert ? "AND " : "WHERE ";
       filterInsert += `candidate_id = ${candidate} `;
-    } else return Promise.resolve([]);
+    } else return Promise.reject(badRequestObject);
   }
 
   const argArr = [];
@@ -34,5 +36,7 @@ exports.selectExams = (date, candidate, location) => {
 };
 
 exports.selectCandidates = () => {
-  return db.query(`SELECT * FROM candidates;`).then((candidates) => candidates.rows);
-}
+  return db
+    .query(`SELECT * FROM candidates;`)
+    .then((candidates) => candidates.rows);
+};
