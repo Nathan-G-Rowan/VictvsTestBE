@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getApi,
   getExams,
+  postExam,
   getCandidates,
   postCandidate,
 } = require("./app.controllers");
@@ -18,6 +19,7 @@ app.use(express.json());
 app.get("/", getApi);
 
 app.get("/exams", getExams);
+app.post("/exams", postExam)
 
 app.get("/candidates", getCandidates);
 app.post("/candidates", postCandidate);

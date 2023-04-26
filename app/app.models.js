@@ -35,6 +35,36 @@ exports.selectExams = (date, candidate, location) => {
   return db.query(selectExamsQuery, argArr).then((exams) => exams.rows);
 };
 
+exports.insertExam = (input) => {
+  if (input.Longitude && input.Latitude) {
+    if (
+      input.Longitude > 180 ||
+      input.Longitude < -180 ||
+      input.Latitude > 90 ||
+      input.Latitude < -90
+    )
+      return Promise.reject(badRequestObject);
+  }
+  return db
+    .query(
+      `
+      INSERT INTO exams (title, description, candidate_id, date, location, latitude, longitude)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *
+      `,
+      [
+        input.Title,
+        input.Description,
+        input.Candidateid,
+        input.Date,
+        input.LocationName,
+        input.Latitude,
+        input.Longitude,
+      ]
+    )
+    .then(({ rows }) => rows[0]);
+};
+
 exports.selectCandidates = () => {
   return db
     .query(`SELECT * FROM candidates;`)
