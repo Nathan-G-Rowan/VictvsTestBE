@@ -108,12 +108,20 @@ describe("GET /exams", () => {
             expect(exams.length).toBe(0);
           });
       });
-      test("200: date query does not allow data injection", () => {
+      test("400: date query does not allow non yyyy-mm-dd or dd-mm-yyyy query", () => {
         return request(app)
           .get("/exams?date='; DROP TABLE exams;'")
-          .expect(200)
-          .then(({ body: { exams } }) => {
-            expect(exams.length).toBe(0);
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("bad request");
+          });
+      });
+      test("400: date query does not allow mm-dd-yyyy query", () => {
+        return request(app)
+          .get("/exams?date=12-31-2023")
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("bad request");
           });
       });
     });
@@ -134,12 +142,12 @@ describe("GET /exams", () => {
             expect(exams.length).toBe(0);
           });
       });
-      test("200: returns empty array when candidate value is not a number", () => {
+      test("400: does not allow non-number queries", () => {
         return request(app)
           .get("/exams?candidate=john")
-          .expect(200)
-          .then(({ body: { exams } }) => {
-            expect(exams.length).toBe(0);
+          .expect(400)
+          .then(({ body: { msg } }) => {
+            expect(msg).toBe("bad request");
           });
       });
     });
@@ -182,7 +190,7 @@ describe("GET /exams", () => {
   });
 });
 
-describe.only("GET /candidates", () => {
+describe("GET /candidates", () => {
   test("200: retrieves a list of all candidates", () => {
     return request(app)
       .get("/candidates")
