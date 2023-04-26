@@ -1,14 +1,26 @@
 const express = require("express");
-const { getApi, getExams, getCandidates } = require("./app.controllers");
-const { handle404Paths, handle500Error, handleCustomError, handleSQLError } = require("./error.controllers");
+const {
+  getApi,
+  getExams,
+  getCandidates,
+  postCandidate,
+} = require("./app.controllers");
+const {
+  handle404Paths,
+  handle500Error,
+  handleCustomError,
+  handleSQLError,
+} = require("./error.controllers");
 
 const app = express();
+app.use(express.json());
 
 app.get("/", getApi);
 
 app.get("/exams", getExams);
 
-app.get("/candidates", getCandidates)
+app.get("/candidates", getCandidates);
+app.post("/candidates", postCandidate);
 
 app.get("*", handle404Paths);
 

@@ -9,7 +9,7 @@ exports.handleCustomError = (error, request, response, next) => {
 };
 
 exports.handleSQLError = (error, request, response, next) => {
-  const badRequestCodes = ["22008"]
+  const badRequestCodes = ["22008", "23502"];
   if (badRequestCodes.includes(error.code)) {
     response.status(400).send({ msg: "bad request" });
   } else next(error);

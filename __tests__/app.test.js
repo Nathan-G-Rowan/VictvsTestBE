@@ -209,3 +209,39 @@ describe("GET /candidates", () => {
       });
   });
 });
+describe("POST /candidates", () => {
+  test("201: returns the new candidate", () => {
+    return request(app)
+      .post("/candidates")
+      .expect(201)
+      .send({
+        name: "bruce",
+      })
+      .then(({ body: { candidate } }) => {
+        expect(candidate).toEqual({
+          id: 5,
+          name: "bruce",
+        });
+      });
+  });
+  test("201: the new candidate is in the database", () => {
+    return request(app)
+      .post("/candidates")
+      .expect(201)
+      .send({
+        name: "bruce",
+      })
+      .then(() => {
+        return db.query(`SELECT * FROM candidates WHERE name = 'bruce';`);
+      })
+      .then(({ rows }) => {
+        expect(rows[0]).toEqual({
+          id: 5,
+          name: "bruce",
+        });
+      });
+  });
+  test("400: does not allow the name field to be left blank", () => {
+    return request(app).post("/candidates").expect(400).send({});
+  });
+});
