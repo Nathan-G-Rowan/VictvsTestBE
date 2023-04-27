@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const {
   getApi,
   getExams,
@@ -14,12 +15,13 @@ const {
 } = require("./error.controllers");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get("/", getApi);
 
 app.get("/exams", getExams);
-app.post("/exams", postExam)
+app.post("/exams", postExam);
 
 app.get("/candidates", getCandidates);
 app.post("/candidates", postCandidate);
