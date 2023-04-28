@@ -168,6 +168,14 @@ describe("GET /exams", () => {
             expect(exams.length).toBe(0);
           });
       });
+      test("200: ignores case", () => {
+        return request(app)
+          .get("/exams?location=lOnDoN")
+          .expect(200)
+          .then(({ body: { exams } }) => {
+            expect(exams.length).toBe(11);
+          });
+      });
       test("200: restricts SQL injection", () => {
         return request(app)
           .get("/exams?location=London AND WHERE nonexistentcolumn = 'sponge'")

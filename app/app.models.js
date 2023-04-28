@@ -22,8 +22,8 @@ exports.selectExams = (date, candidate, location) => {
 
   if (location) {
     filterInsert += filterInsert ? "AND " : "WHERE ";
-    filterInsert += `location = $1 `;
-    argArr.push(location);
+    filterInsert += `upper(location) = $1 `;
+    argArr.push(location.toUpperCase());
   }
 
   let selectExamsQuery = `
