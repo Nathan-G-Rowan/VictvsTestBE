@@ -43,7 +43,7 @@ describe("GET /exams", () => {
                 date: expect.any(String),
                 candidate_id: expect.any(Number),
                 candidate_name: expect.any(String),
-                location_name: expect.any(String),
+                location: expect.any(String),
                 latitude: expect.any(Number),
                 longitude: expect.any(Number),
               })
@@ -75,7 +75,7 @@ describe("GET /exams", () => {
               candidate_id: 1,
               candidate_name: "Wilmers",
               date: "2023-06-17T15:30:00.000Z",
-              location_name: "London",
+              location: "London",
               latitude: 51.514427,
               longitude: -0.072081864,
             });
@@ -94,7 +94,7 @@ describe("GET /exams", () => {
               candidate_id: 1,
               candidate_name: "Wilmers",
               date: "2023-06-17T15:30:00.000Z",
-              location_name: "London",
+              location: "London",
               latitude: 51.514427,
               longitude: -0.072081864,
             });

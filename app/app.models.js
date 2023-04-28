@@ -22,7 +22,7 @@ exports.selectExams = (date, candidate, location) => {
 
   if (location) {
     filterInsert += filterInsert ? "AND " : "WHERE ";
-    filterInsert += `location_name = $1 `;
+    filterInsert += `location = $1 `;
     argArr.push(location);
   }
 
