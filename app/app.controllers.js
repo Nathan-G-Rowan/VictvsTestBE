@@ -21,6 +21,7 @@ exports.getExams = (request, response, next) => {
 };
 
 exports.postExam = (request, response, next) => {
+  console.log(request.body);
   insertExam(request.body)
     .then((exam) => {
       response.status(201).send({ exam });
