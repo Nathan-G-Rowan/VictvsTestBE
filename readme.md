@@ -2,7 +2,7 @@
 
 The backend portion of Nathan Rowan's Victvs tech test.
 
-API Host: https://nrvictvstest.onrender.com/api
+API Host: https://nrvictvstest.onrender.com/
 
 ## Contains:
 
